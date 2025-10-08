@@ -24,9 +24,19 @@ an interactive tutorial:
 7. Provide feedback to the user after submission.
 8. Run the Tkinter event loop.
 
-Tip: run the script with ``python Formular.py`` and keep the editor side-by-side
-with the application window. When you trigger the different buttons you can
-follow along in the source code to see which functions are executed.
+------------------------
+How to show the form window
+------------------------
+1. Make sure Python 3.10+ is installed. On Windows you can verify this by
+   running ``py --version`` in *PowerShell*, on macOS/Linux use
+   ``python3 --version``.
+2. Open a terminal inside the folder that contains this file.
+3. Execute ``python Formular.py`` (or ``python3 Formular.py`` depending on the
+   operating system). Tkinter will open a new window titled
+   "Schritt-für-Schritt Formular".
+4. Keep the editor side-by-side with the application window. When you trigger
+   the buttons you can follow along in the source code to see which functions
+   are executed.
 """
 
 from __future__ import annotations
@@ -40,7 +50,7 @@ from dataclasses import dataclass
 # widget set ``tkinter.ttk``. Importing from both allows us to combine classic
 # and modern controls. Only the names that we actively use are imported which
 # keeps the namespace tidy and readable.
-from tkinter import END, LEFT, RIGHT, StringVar, Tk, ttk, messagebox
+from tkinter import END, LEFT, RIGHT, StringVar, Text, Tk, ttk, messagebox
 
 
 # 2. Define a dataclass to hold the submitted form data --------------------------
@@ -160,9 +170,11 @@ def build_comments_field(parent: Tk) -> ttk.Frame:
     comments_frame = ttk.LabelFrame(parent, text="Kommentare", padding=12)
     comments_frame.pack(fill="both", expand=True, padx=20, pady=(0, 20))
 
-    # ``ttk.Text`` creates a multi-line text box. ``wrap='word'`` avoids breaking
-    # words when the text reaches the end of the line, improving readability.
-    comments_widget = ttk.Text(comments_frame, width=40, height=6, wrap="word")
+    # ``Text`` (from the classic Tk widget set) creates a multi-line text box.
+    # ``wrap='word'`` avoids breaking words when the text reaches the end of the
+    # line, improving readability. ``Text`` lives in ``tkinter`` rather than in
+    # ``tkinter.ttk`` which is why we imported it separately above.
+    comments_widget = Text(comments_frame, width=40, height=6, wrap="word")
     comments_widget.pack(fill="both", expand=True)
 
     # ``Text`` widgets do not accept ``textvariable`` like ``Entry`` does. To
